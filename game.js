@@ -1,5 +1,6 @@
 function getComputerChoice(){
-    choiceVal = Math.floor(Math.random() * 3)
+    let choiceVal = Math.floor(Math.random() * 3)
+    console.log(choiceVal);
     if (choiceVal === 0){
         return "rock"
     }
@@ -11,10 +12,6 @@ function getComputerChoice(){
     }
 }
 
-function getHumanChoice(){
-    let playerChoice = prompt("Enter your choice. Press cancel to exit the game: ")
-    return playerChoice
-}
 let computerScore = 0;
 let playerScore = 0;
 let roundNum = 0;
@@ -47,18 +44,22 @@ function playRound(playerChoice, computerChoice){
     let playerChoiceCaptitalized = capitalize(playerChoice);
     let computerChoiceCapitalized = capitalize(computerChoice);
     //
-    let resultElem = document.querySelector("#result-content");
-    let resultContent = ": ";
+    let resultElem = document.querySelector("#result-title");
+    let resultContent = "Result : ";
     if (tie){
         resultContent += "This round is tie!";
     }
     else if (playerWin){
+        resultElem.classList.remove("lose-msg");
+        resultElem.classList.add("win-msg");
         resultContent += `You win! ${playerChoiceCaptitalized} beats ${computerChoiceCapitalized}!`;
-        playerScore++
+        playerScore++;
     }
     else{
+        resultElem.classList.remove("win-msg");
+        resultElem.classList.add("lose-msg");
         resultContent += `You lose! ${computerChoiceCapitalized} beats ${playerChoiceCaptitalized}!`;
-        computerScore++
+        computerScore++;
     }
 
     // delete previous round result to display current round result
@@ -82,14 +83,24 @@ function capitalize(str){
 }
 
 function checkForWinner(){
-    //TODO
+    // first reaches 5 is the winner -> player confirm to reset
+    let isReset = false;
+    if (playerScore === 5){
+        isReset = confirm("You are the winner");
+    }
+    else if (computerScore === 5){
+        isReset = confirm("Computer is the winner");
+    }
+    
+    if (isReset){
+        location.reload();
+    }
 }
 
 const rockBtn = document.querySelector("#rock");
 const paperBtn = document.querySelector("#paper");
 const scissorsBtn = document.querySelector("#scissors");
 
-let computerChoice = getComputerChoice();
-rockBtn.addEventListener("click", (e) => playRound("rock", computerChoice));
-paperBtn.addEventListener("click", (e) => playRound("paper", computerChoice));
-scissorsBtn.addEventListener("click", (e) => playRound("scissors", computerChoice));
+rockBtn.addEventListener("click", (e) => playRound("rock", getComputerChoice()));
+paperBtn.addEventListener("click", (e) => playRound("paper", getComputerChoice()));
+scissorsBtn.addEventListener("click", (e) => playRound("scissors", getComputerChoice()));

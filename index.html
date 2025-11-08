@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script src="game.js" defer></script>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
@@ -11,17 +12,20 @@
     <div class="result">
         <h2>Round <span id="round-number">1</span></h2>
         <h3 id="result-title">Result <span id="result-content"></span></h3>
-        <div>
-            <span>Computer: </span>
-            <span id="computer-score">0</span>
-        </div>
-        <div>
-            <span>Player: </span>
-            <span id="player-score">0</span>
+        <div class="horizontal-container">
+            <div>
+                <span>Computer: </span>
+                <span id="computer-score">0</span>
+            </div>
+            <div>
+                <span>Player: </span>
+                <span id="player-score">0</span>
+            </div>
         </div>
         
+        
     </div>
-    <div>
+    <div class="button-container">
         <button id="rock" class="choice">Rock</button>
         <button id="paper" class="choice">Paper</button>
         <button id="scissors" class="choice">Scissors</button>
