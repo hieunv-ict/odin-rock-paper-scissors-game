@@ -46,17 +46,17 @@ function playRound(playerChoice, computerChoice){
     //
     let resultElem = document.querySelector("#result-title");
     let resultContent = "Result : ";
+    resultElem.classList.remove("lose-msg");
+    resultElem.classList.remove("win-msg");
     if (tie){
         resultContent += "This round is tie!";
     }
     else if (playerWin){
-        resultElem.classList.remove("lose-msg");
         resultElem.classList.add("win-msg");
         resultContent += `You win! ${playerChoiceCaptitalized} beats ${computerChoiceCapitalized}!`;
         playerScore++;
     }
     else{
-        resultElem.classList.remove("win-msg");
         resultElem.classList.add("lose-msg");
         resultContent += `You lose! ${computerChoiceCapitalized} beats ${playerChoiceCaptitalized}!`;
         computerScore++;
@@ -75,7 +75,8 @@ function playRound(playerChoice, computerChoice){
     roundNum++;
     let roundElem = document.querySelector("#round-number");
     roundElem.textContent = roundNum;
-    checkForWinner();
+    setTimeout(checkForWinner, 500);
+    
 }
 
 function capitalize(str){
@@ -93,7 +94,7 @@ function checkForWinner(){
     }
     
     if (isReset){
-        location.reload();
+        location.reload(1);
     }
 }
 
