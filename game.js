@@ -1,13 +1,13 @@
 function getComputerChoice(){
     choiceVal = Math.floor(Math.random() * 3)
     if (choiceVal === 0){
-        return "Rock"
+        return "rock"
     }
     else if (choiceVal === 1){
-        return "Paper"
+        return "paper"
     }
     else{
-        return "Scissors"
+        return "scissors"
     }
 }
 
@@ -15,88 +15,81 @@ function getHumanChoice(){
     let playerChoice = prompt("Enter your choice. Press cancel to exit the game: ")
     return playerChoice
 }
+let computerScore = 0;
+let playerScore = 0;
+let roundNum = 0;
 
-let computerScore = 0
-let playerScore = 0
 function playRound(playerChoice, computerChoice){
-    //make playerChoice case-insensitive
-    let playerChoiceLowerCase = String(playerChoice).toLowerCase()
-    let computerChoiceLowerCase = String(computerChoice).toLowerCase()
-
     //compare 2 choices to determine round result
     playerWin = false;
     tie = false;
 
-    if (playerChoiceLowerCase === computerChoiceLowerCase){
+    if (playerChoice === computerChoice){
         tie = true;
     }
-    else if (playerChoiceLowerCase === "rock"){
-        if (computerChoiceLowerCase === "scissors"){
+    else if (playerChoice === "rock"){
+        if (computerChoice === "scissors"){
             playerWin = true;
         }
     }
-    else if (playerChoiceLowerCase === "paper"){
-        if (computerChoiceLowerCase === "rock"){
+    else if (playerChoice === "paper"){
+        if (computerChoice === "rock"){
             playerWin = true;
         }
     }
     else {
-        if (computerChoiceLowerCase === "paper"){
+        if (computerChoice === "paper"){
             playerWin = true;
         }
     }
-
-    //Process the choices to capitalized format
-    playerChoiceCaptitalized = captitalize(playerChoiceLowerCase)
-    computerChoiceCapitalized = captitalize(computerChoiceLowerCase)
-    //change score based on 2 result
+    
+    // Capitalize 2 choices to display result
+    let playerChoiceCaptitalized = capitalize(playerChoice);
+    let computerChoiceCapitalized = capitalize(computerChoice);
+    //
+    let resultElem = document.querySelector("#result-content");
+    let resultContent = ": ";
     if (tie){
-        console.log("This round is tie!")
+        resultContent += "This round is tie!";
     }
     else if (playerWin){
-        console.log(`You win! ${playerChoiceCaptitalized} beats ${computerChoiceCapitalized}!`)
+        resultContent += `You win! ${playerChoiceCaptitalized} beats ${computerChoiceCapitalized}!`;
         playerScore++
     }
     else{
-        console.log(`You lose! ${computerChoiceCapitalized} beats ${playerChoiceCaptitalized}!`)
+        resultContent += `You lose! ${computerChoiceCapitalized} beats ${playerChoiceCaptitalized}!`;
         computerScore++
     }
-    //print result of the round
-    console.log(`Player: ${playerScore} \nComputer: ${computerScore}`)
-}
 
-function captitalize(str){
-    let tmp = String(str)
-    let strArr = tmp.split('')
-    strArr[0] = strArr[0].toUpperCase()
-    let res = strArr.join("")
-    return res
-}
-
-
-function playGame(){
+    // delete previous round result to display current round result
+    resultElem.textContent = "";
+    resultElem.textContent = resultContent;
     
-    for (let i = 0; i < 5; i++){
-        
-        let playerChoice = getHumanChoice()
-        console.log(playerChoice)
-        if (playerChoice == null || playerChoice == ""){
-            console.log("You have exited.")
-            return
-        }
-        
-        console.log("Round " +(i+1))
-        playRound(playerChoice, getComputerChoice())
-    }
-    if (playerScore > computerScore){
-        alert("You win the game!")
-    }
-    else if (computerScore > playerScore){
-        alert("Computer win the game!")
-    }
-    else{
-        alert("The game is tie!")
-    }
+    // keep track of the score
+    let computerScoreElem = document.querySelector("#computer-score");
+    let playerScoreElem = document.querySelector("#player-score");
+    playerScoreElem.textContent = playerScore;
+    computerScoreElem.textContent = computerScore;
+    // keep track the round number
+    roundNum++;
+    let roundElem = document.querySelector("#round-number");
+    roundElem.textContent = roundNum;
+    checkForWinner();
 }
 
-playGame()
+function capitalize(str){
+    return str[0].toUpperCase() + str.slice(1);
+}
+
+function checkForWinner(){
+    //TODO
+}
+
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+
+let computerChoice = getComputerChoice();
+rockBtn.addEventListener("click", (e) => playRound("rock", computerChoice));
+paperBtn.addEventListener("click", (e) => playRound("paper", computerChoice));
+scissorsBtn.addEventListener("click", (e) => playRound("scissors", computerChoice));
