@@ -14,6 +14,14 @@ button{
 }
 #result-title{
     font-size: 24px;
+    margin: 8px;
+}
+.result-container{
+    margin: 16px;
+}
+.result-container > button{
+    background-color: cornflowerblue;
+    display:none;
 }
 
 .lose-msg{
@@ -21,6 +29,12 @@ button{
 }
 .win-msg{
     color: coral;
+}
+.victory-msg{
+    color:orangered;
+}
+.fail-msg{
+    color:cadetblue;
 }
 
 .horizontal-container{

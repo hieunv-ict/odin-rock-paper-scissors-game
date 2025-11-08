@@ -75,7 +75,7 @@ function playRound(playerChoice, computerChoice){
     roundNum++;
     let roundElem = document.querySelector("#round-number");
     roundElem.textContent = roundNum;
-    setTimeout(checkForWinner, 500);
+    checkForWinner(resultElem);
     
 }
 
@@ -83,19 +83,26 @@ function capitalize(str){
     return str[0].toUpperCase() + str.slice(1);
 }
 
-function checkForWinner(){
+function checkForWinner(resultElem){
     // first reaches 5 is the winner -> player confirm to reset
-    let isReset = false;
+    let restartBtn = document.querySelector(".result-container > button");
+    restartBtn.addEventListener("click", () => {location.reload(); restartBtn.style["display"] = "none";});
     if (playerScore === 5){
-        isReset = confirm("You are the winner");
+        resultElem.classList.remove("lose-msg");
+        resultElem.classList.remove("win-msg");
+        resultElem.classList.add("victory-msg");
+        resultElem.textContent = "You are the winner";
+        restartBtn.style["display"] = "initial";
     }
     else if (computerScore === 5){
-        isReset = confirm("Computer is the winner");
+        resultElem.classList.remove("lose-msg");
+        resultElem.classList.remove("win-msg");
+        resultElem.classList.add("fail-msg");
+        resultElem.textContent = "Computer is the winner";
+        restartBtn.style["display"] = "initial";
     }
     
-    if (isReset){
-        location.reload(1);
-    }
+    
 }
 
 const rockBtn = document.querySelector("#rock");
